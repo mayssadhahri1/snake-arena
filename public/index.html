@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake Arena</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Snake<span>Arena</span></h1>
+    <div class="stats">
+      <div class="stat"><small>Score</small><strong id="score">0</strong></div>
+      <div class="stat"><small>Niveau</small><strong id="level">1</strong></div>
+      <div class="stat"><small>Record</small><strong id="best">0</strong></div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="board-wrap">
+      <canvas id="board" width="480" height="480" aria-label="Plateau de jeu"></canvas>
+
+      <!-- Écran affiché au début, en pause et en fin de partie -->
+      <div id="overlay" class="overlay">
+        <h2 id="overlay-title">Prêt ?</h2>
+        <p id="overlay-text">Flèches ou ZQSD pour diriger le serpent. Espace pour mettre en pause.</p>
+        <form id="score-form" class="score-form" hidden>
+          <input id="player-name" type="text" maxlength="20" placeholder="Ton pseudo" autocomplete="off" />
+          <button type="submit">Enregistrer</button>
+        </form>
+        <p id="form-message" class="form-message" role="status"></p>
+        <button id="start-btn" class="primary">Jouer</button>
+      </div>
+
+      <!-- Contrôles tactiles pour mobile -->
+      <div class="pad" aria-hidden="true">
+        <button data-dir="up">▲</button>
+        <button data-dir="left">◀</button>
+        <button data-dir="down">▼</button>
+        <button data-dir="right">▶</button>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <h3>Classement</h3>
+      <ol id="leaderboard" class="leaderboard"><li class="empty">Chargement…</li></ol>
+    </aside>
+  </main>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>
