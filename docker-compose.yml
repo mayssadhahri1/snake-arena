@@ -1,0 +1,14 @@
+services:
+  snake-arena:
+    build: .
+    image: snake-arena:latest
+    container_name: snake-arena
+    ports:
+      - "3000:3000"
+    volumes:
+      # Le classement est conservé même si le conteneur est recréé
+      - scores-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  scores-data:
