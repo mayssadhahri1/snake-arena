@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build de l'image
+        run: docker build -t snake-arena:ci .
+      - name: Smoke test du conteneur
+        run: |
+          docker run -d --name snake -p 3000:3000 snake-arena:ci
+          for i in $(seq 1 10); do
+            curl -fs http://localhost:3000/api/health && exit 0
+            sleep 2
+          done
+          docker logs snake
+          exit 1
+      - name: Scan de sécurité Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: snake-arena:ci
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
