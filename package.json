@@ -1,0 +1,21 @@
+{
+  "name": "snake-arena",
+  "version": "1.0.0",
+  "description": "Jeu Snake web avec classement en ligne : API Node.js/Express, Docker, Jenkins et GitHub Actions",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": ["snake", "game", "express", "docker", "jenkins", "ci-cd"],
+  "author": "Mayssa Dhahri",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
