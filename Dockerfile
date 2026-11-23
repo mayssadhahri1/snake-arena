@@ -14,7 +14,11 @@ COPY package.json ./
 COPY server ./server
 COPY public ./public
 
-RUN mkdir -p /app/data && chown -R node:node /app/data
+# npm et yarn ne servent pas à l'exécution : on les retire pour réduire la surface d'attaque
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+      /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn* \
+      /usr/local/bin/yarn /usr/local/bin/yarnpkg \
+ && mkdir -p /app/data && chown -R node:node /app/data
 USER node
 
 EXPOSE 3000
